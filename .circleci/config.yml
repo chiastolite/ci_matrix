@@ -1,0 +1,25 @@
+version: 2.1
+
+executors:
+  ruby:
+    docker:
+      - image: ruby:<< parameters.ruby-version >>
+
+jobs:
+  test:
+    parameters:
+      ruby-version:
+        type: string
+    executor: ruby
+    steps:
+      - checkout
+      - run: ruby -v
+
+workflows:
+  all-tests:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby-version: ["2.6.6", "2.7.1"]
+
